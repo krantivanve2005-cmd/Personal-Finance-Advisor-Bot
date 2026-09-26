@@ -1,0 +1,40 @@
+{% extends "app_base.html" %}
+{% set active_tab = 'advisor' %}
+{% block page_header %}
+<h1>Ask Your AI Financial Advisor</h1>
+<div class="sub">Get personalized insights based on your income, expenses, budget, savings, and financial goals.</div>
+{% endblock %}
+{% block content %}
+<div class="chat-shell">
+  <div class="chat-panel">
+    <div class="chat-log" id="chat-log">
+      {% if history %}
+        {% for h in history %}
+        <div class="msg user">{{ h.prompt }}</div>
+        <div class="msg ai">{{ h.response }}</div>
+        {% endfor %}
+      {% else %}
+        <div class="msg user">How can I save ₹10,000 every month?</div>
+        <div class="msg ai">Based on your current spending pattern, you can potentially save ₹10,000 by reducing shopping expenses by ₹2,000, food expenses by ₹1,500, entertainment by ₹1,000, and redirecting ₹5,500 toward your savings goal.</div>
+      {% endif %}
+    </div>
+    <div class="chat-input">
+      <input id="chat-text" type="text" placeholder="Ask your financial question...">
+      <button class="btn btn-primary" onclick="sendChat()">Ask AI</button>
+    </div>
+  </div>
+  <div class="suggested">
+    <h4>Suggested prompts</h4>
+    <button class="chip" onclick="chip(this)">How can I reduce my expenses?</button>
+    <button class="chip" onclick="chip(this)">Create a monthly budget for me</button>
+    <button class="chip" onclick="chip(this)">Am I overspending?</button>
+    <button class="chip" onclick="chip(this)">How much should I save?</button>
+    <button class="chip" onclick="chip(this)">Help me build an emergency fund</button>
+    <button class="chip" onclick="chip(this)">Analyze my spending</button>
+    <button class="chip" onclick="chip(this)">How can I reach my savings goal?</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.AI_ASK_URL = "{{ url_for('ai.ask') }}";</script>
+{% endblock %}

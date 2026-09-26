@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="nav">
+  <div class="brand">
+    <div class="mark">F</div>
+    <div class="brand-text"><div class="name">FinAI</div><div class="sub">Personal Finance Advisor</div></div>
+  </div>
+  <div class="navlinks">
+    <a href="#features-sec">Features</a><a href="#how-sec">How It Works</a>
+    <a href="{{ url_for('auth.login') }}">Dashboard</a>
+  </div>
+  <div class="navcta">
+    <a class="btn btn-ghost" href="{{ url_for('auth.login') }}">Login</a>
+    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Get Started</a>
+  </div>
+  <button class="hamburger" onclick="location.href='{{ url_for('auth.login') }}'">☰</button>
+</div>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Take control of your money<br>with AI</h1>
+      <p class="lead">Track your spending, create smarter budgets, increase your savings, and receive personalized financial insights powered by AI.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Start Managing Finances</a>
+        <a class="btn btn-ghost" href="{{ url_for('auth.login') }}">Explore AI Advisor</a>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-card">
+        <div class="mock-row">
+          <div class="mock-stat"><div class="l">Total Balance</div><div class="v">₹48,500</div></div>
+          <div class="mock-stat"><div class="l">Monthly Income</div><div class="v">₹60,000</div></div>
+          <div class="mock-stat"><div class="l">Monthly Expenses</div><div class="v">₹34,250</div></div>
+          <div class="mock-stat"><div class="l">Savings</div><div class="v">₹25,750</div></div>
+        </div>
+        <svg viewBox="0 0 320 90" width="100%" height="90">
+          <polyline points="0,70 50,55 100,60 150,35 200,45 250,20 300,25" fill="none" stroke="#12A972" stroke-width="3"/>
+          <polyline points="0,80 50,65 100,68 150,75 200,60 250,66 300,55" fill="none" stroke="#E7EAF0" stroke-width="3"/>
+        </svg>
+      </div>
+      <div class="ai-float">
+        <div class="tag">🤖 AI Insight</div>
+        <p>You spent 18% more on food this month. Reducing food expenses by ₹1,500 could increase your monthly savings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features-sec">
+  <div class="sec-head"><h2>Everything you need to manage your finances</h2><p>One place to track, plan, and understand every rupee.</p></div>
+  <div class="feat-grid">
+    <div class="feat-card wide"><div class="ic" style="background:#E4F7ED;color:#0C8058;">💳</div><h3>Expense Tracking</h3><p>Track every transaction and categorize your spending automatically.</p></div>
+    <div class="feat-card"><div class="ic" style="background:#EAF0FF;color:#3E7BFA;">📊</div><h3>Smart Budgeting</h3><p>Generate personalized monthly budgets based on income and spending behavior.</p></div>
+    <div class="feat-card"><div class="ic" style="background:#FCEFE0;color:#B4740E;">🤖</div><h3>AI Financial Advisor</h3><p>Receive AI-powered recommendations tailored to your financial goals.</p></div>
+    <div class="feat-card wide"><div class="ic" style="background:#E4F7ED;color:#0C8058;">🎯</div><h3>Savings Planner</h3><p>Set savings goals and monitor your progress toward each one.</p></div>
+    <div class="feat-card"><div class="ic" style="background:#EAF0FF;color:#3E7BFA;">📈</div><h3>Spending Analytics</h3><p>Understand where your money goes using interactive charts.</p></div>
+    <div class="feat-card"><div class="ic" style="background:#FCEFE0;color:#B4740E;">🧾</div><h3>Monthly Reports</h3><p>Generate detailed monthly financial reports and summaries.</p></div>
+  </div>
+</section>
+
+<section class="section" id="how-sec">
+  <div class="sec-head"><h2>How it works</h2><p>From setup to smarter decisions, in four steps.</p></div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Create your profile</h3><p>Enter income, financial goals, and basic information.</p></div>
+    <div class="step"><div class="num">2</div><h3>Track your finances</h3><p>Add income and expenses and categorize transactions.</p></div>
+    <div class="step"><div class="num">3</div><h3>Let AI analyze</h3><p>AI reviews spending patterns, budgets, savings and behavior.</p></div>
+    <div class="step"><div class="num">4</div><h3>Improve financial health</h3><p>Receive personalized recommendations and monitor progress.</p></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div><div class="brand-text"><div class="name" style="color:#fff;">FinAI</div><div class="sub">AI-powered personal finance management</div></div></div>
+    <div class="footer-links"><a href="#">About</a><a href="#features-sec">Features</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  </div>
+  <p class="disclaimer">FinAI provides AI-generated financial insights for educational and informational purposes only. It does not provide professional financial, investment, tax, or legal advice.</p>
+  <p class="copyright">© 2026 FinAI. All rights reserved.</p>
+</footer>
+{% endblock %}

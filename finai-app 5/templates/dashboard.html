@@ -1,0 +1,84 @@
+{% extends "app_base.html" %}
+{% set active_tab = 'dashboard' %}
+{% block page_header %}
+<h1>Good Evening, {{ current_user.full_name.split(' ')[0] }} 👋</h1>
+<div class="sub">Here is your financial overview for September 2026.</div>
+{% endblock %}
+{% block content %}
+<div class="cards-row">
+  <div class="stat-card"><div class="l">Total Balance</div><div class="v">₹{{ '{:,.0f}'.format(total_savings + total_income*0) }}</div><span class="chg up">+8.4%</span></div>
+  <div class="stat-card"><div class="l">Monthly Income</div><div class="v">₹{{ '{:,.0f}'.format(total_income) }}</div><span class="chg up">+2.1%</span></div>
+  <div class="stat-card"><div class="l">Monthly Expenses</div><div class="v">₹{{ '{:,.0f}'.format(total_expenses) }}</div><span class="chg down">-4.2%</span></div>
+  <div class="stat-card"><div class="l">Monthly Savings</div><div class="v">₹{{ '{:,.0f}'.format(total_savings) }}</div><span class="chg up">+12.7%</span></div>
+</div>
+
+<div class="ai-insight">
+  <h3>🤖 AI Financial Insight</h3>
+  <div class="lead">Your spending is slightly higher than last month.</div>
+  <ol>
+    <li>Reduce dining expenses by ₹1,200.</li>
+    <li>Limit unnecessary shopping.</li>
+    <li>Save at least ₹5,000 this month.</li>
+    <li>Maintain an emergency fund.</li>
+    <li>Review subscriptions and recurring payments.</li>
+  </ol>
+  <a class="btn btn-primary" href="{{ url_for('ai.advisor') }}">View Full Analysis</a>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <h3>Monthly Spending — Income vs Expenses vs Savings</h3>
+    <svg viewBox="0 0 640 200" width="100%" height="200">
+      <g font-family="Inter" font-size="10" fill="#626B84">
+        <text x="70" y="196">Apr</text><text x="170" y="196">May</text><text x="270" y="196">Jun</text><text x="370" y="196">Jul</text><text x="470" y="196">Aug</text><text x="565" y="196">Sep</text>
+      </g>
+      <g>
+        <rect x="53" y="52" width="14" height="138" rx="2" fill="#3E7BFA"/><rect x="70" y="95" width="14" height="95" rx="2" fill="#E5484D"/><rect x="87" y="147" width="14" height="43" rx="2" fill="#12A972"/>
+        <rect x="153" y="45" width="14" height="145" rx="2" fill="#3E7BFA"/><rect x="170" y="90" width="14" height="100" rx="2" fill="#E5484D"/><rect x="187" y="145" width="14" height="45" rx="2" fill="#12A972"/>
+        <rect x="253" y="40" width="14" height="150" rx="2" fill="#3E7BFA"/><rect x="270" y="100" width="14" height="90" rx="2" fill="#E5484D"/><rect x="287" y="130" width="14" height="60" rx="2" fill="#12A972"/>
+        <rect x="353" y="40" width="14" height="150" rx="2" fill="#3E7BFA"/><rect x="370" y="85" width="14" height="105" rx="2" fill="#E5484D"/><rect x="387" y="145" width="14" height="45" rx="2" fill="#12A972"/>
+        <rect x="453" y="40" width="14" height="150" rx="2" fill="#3E7BFA"/><rect x="470" y="92" width="14" height="98" rx="2" fill="#E5484D"/><rect x="487" y="137" width="14" height="53" rx="2" fill="#12A972"/>
+        <rect x="548" y="40" width="14" height="150" rx="2" fill="#3E7BFA"/><rect x="565" y="104" width="14" height="86" rx="2" fill="#E5484D"/><rect x="582" y="126" width="14" height="64" rx="2" fill="#12A972"/>
+      </g>
+    </svg>
+    <div class="legend"><span><span class="dot" style="background:#3E7BFA;"></span>Income</span><span><span class="dot" style="background:#E5484D;"></span>Expenses</span><span><span class="dot" style="background:#12A972;"></span>Savings</span></div>
+  </div>
+
+  <div class="panel">
+    <h3>Expense Breakdown</h3>
+    <svg viewBox="0 0 200 200" width="100%" height="180">
+      <g transform="translate(100,100) rotate(-90)">
+        <circle r="70" fill="none" stroke="#12A972" stroke-width="26" stroke-dasharray="96.3 439.8" stroke-dashoffset="0"/>
+        <circle r="70" fill="none" stroke="#E9A320" stroke-width="26" stroke-dasharray="77 439.8" stroke-dashoffset="-96.3"/>
+        <circle r="70" fill="none" stroke="#3E7BFA" stroke-width="26" stroke-dasharray="64.2 439.8" stroke-dashoffset="-173.3"/>
+        <circle r="70" fill="none" stroke="#E5484D" stroke-width="26" stroke-dasharray="51.4 439.8" stroke-dashoffset="-237.5"/>
+        <circle r="70" fill="none" stroke="#B98CE0" stroke-width="26" stroke-dasharray="32.1 439.8" stroke-dashoffset="-288.9"/>
+        <circle r="70" fill="none" stroke="#0C8058" stroke-width="26" stroke-dasharray="64.2 439.8" stroke-dashoffset="-321.0"/>
+        <circle r="70" fill="none" stroke="#B7C0E0" stroke-width="26" stroke-dasharray="54.5 439.8" stroke-dashoffset="-385.2"/>
+      </g>
+    </svg>
+    <div class="donut-legend">
+      {% for cat, amt in by_category.items() %}
+      <div><span>{{ cat }}</span><span>₹{{ '{:,.0f}'.format(amt) }}</span></div>
+      {% else %}
+      <div><span>Food</span><span>₹7,500</span></div>
+      <div><span>Bills</span><span>₹6,000</span></div>
+      <div><span>Shopping</span><span>₹5,000</span></div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Budget Performance</h3>
+  {% for row in budget_rows %}
+  <div class="budget-row">
+    <div class="budget-top"><span>{{ row.category }}</span><span>₹{{ '{:,.0f}'.format(row.spent) }} / ₹{{ '{:,.0f}'.format(row.limit) }} · {{ row.pct }}%</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ [row.pct, 100]|min }}%;background:{{ 'var(--danger)' if row.pct > 100 else ('var(--warn)' if row.pct > 90 else 'var(--emerald)') }};"></div></div>
+    {% if row.pct > 100 %}<div class="over">⚠️ Budget Exceeded</div>{% endif %}
+  </div>
+  {% else %}
+  <p style="color:var(--muted);font-size:13.5px;">No budgets set yet. Run <code>python seed.py</code> for demo data, or add budgets via the Flask shell / Budget model.</p>
+  {% endfor %}
+</div>
+{% endblock %}

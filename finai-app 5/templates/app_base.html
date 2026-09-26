@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="app-shell">
+  <div class="sidebar" id="sidebar">
+    <div class="sb-brand"><div class="mark" style="width:30px;height:30px;font-size:14px;">F</div><div class="brand-text"><div class="name">FinAI</div></div></div>
+    <div class="sb-nav">
+      <a class="sb-link {{ 'active' if active_tab=='dashboard' }}" href="{{ url_for('main.dashboard') }}"><span class="ic">🏠</span>Dashboard</a>
+      <a class="sb-link {{ 'active' if active_tab=='transactions' }}" href="{{ url_for('main.transactions') }}"><span class="ic">💳</span>Transactions</a>
+      <a class="sb-link {{ 'active' if active_tab=='savings' }}" href="{{ url_for('main.savings') }}"><span class="ic">🎯</span>Savings Goals</a>
+      <a class="sb-link {{ 'active' if active_tab=='advisor' }}" href="{{ url_for('ai.advisor') }}"><span class="ic">🤖</span>AI Advisor</a>
+    </div>
+    <a class="sb-logout" href="{{ url_for('auth.logout') }}"><span class="ic">↩</span>Logout</a>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <button class="hamburger" style="color:var(--ink);display:none;" onclick="toggleSidebar()">☰</button>
+        {% block page_header %}{% endblock %}
+      </div>
+      <div class="top-icons"><div class="bell">🔔</div><div class="avatar">{{ current_user.full_name[0] if current_user.is_authenticated else 'U' }}</div></div>
+    </div>
+    {% block content %}{% endblock %}
+  </div>
+</div>
+<script>window.CSRF_TOKEN = "{{ csrf_token() }}";</script>
+{% endblock %}
